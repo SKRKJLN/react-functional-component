@@ -8,24 +8,29 @@ class UserData extends Component {
       seconds: 0,
     };
   }
-
+  
+  // Lifecycle method: runs after the component is mounted
   componentDidMount() {
     this.fetchUserData();
     this.intervalId = setInterval(() => {
       this.setState(prevState => ({ seconds: prevState.seconds + 1 }));
     }, 1000);
   }
-
+  
+  // Lifecycle method: runs when the component updates
   componentDidUpdate(prevProps, prevState) {
     if (this.props.userId !== prevProps.userId) {
       this.fetchUserData();
     }
   }
-
+  
+  // Lifecycle method: runs just before the component is unmounted
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
 
+  
+  // Function to fetch user data from the API
   fetchUserData = () => {
     fetch(`https://secret.url/user/${this.props.userId}`)
       .then(response => response.json())
